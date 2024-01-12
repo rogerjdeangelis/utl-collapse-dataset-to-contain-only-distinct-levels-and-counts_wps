@@ -35,8 +35,8 @@ Nice way to communicate the metric of a table in a usedull way
     /* Louise   F   12  56.3  |  ;quit;));                  |   Louise     1        .          .    65.3     1                */
     /* Mary     F   15  66.5  |                             |   Mary       1        .          .    66.5     2                */
     /* Philip   M   16  72.0  |  data sd1.want;             |   Philip     1        .          .    67       1                */
-    /* Robert   M   12  64.8  |    merge name sex age       |   Robert     1        .          .    69       1                */
-    /* Ronald   M   15  67.0  |       height weight;        |   Ronald     1        .          .    72       1                */
+    /* Robert   M   12  64.8  |  merge %utl_varlist         |   Robert     1        .          .    69       1                */
+    /* Ronald   M   15  67.0  |       hsd1.have)            |   Ronald     1        .          .    72       1                */
     /* Thomas   M   11  57.5  |                             |   Thomas     1        .          .             .                */
     /* William  M   15  66.5  |                             |   William    1        .          .             .                */
     /*                        |                             |                                                                 */
@@ -100,7 +100,9 @@ Nice way to communicate the metric of a table in a usedull way
     |_|
     */
 
-    %array(_vs,values=%utl_varlist(sd1.class));
+    proc datasets lib=sd1 nolist mt=data mt=view nodetails;delete want; run;quit
+    
+    %array(_vs,values=%utl_varlist(sd1.have));
 
     %put &_vs4; /*----  HEIGHT                                               ----*/
     %put &_vsn; /*----  5                                                    ----*/
@@ -125,7 +127,7 @@ Nice way to communicate the metric of a table in a usedull way
     ;quit;));
 
     data sd1.want;
-      merge name sex age height weight;
+      merge name merge %utl_varlist(sd1.class);
     run;quit;
     ");
 
